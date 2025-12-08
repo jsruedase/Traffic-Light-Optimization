@@ -3,10 +3,6 @@ import numpy as np
 
 class Car:
     def __init__(self, orientation: str, eagerness: int = None, eagerness_distribution: str = "poisson"):
-        self.color = random.choice(["red", "white", "black", "green", "blue"])
-        s = random.uniform(0,1)
-        self.size = 1 if s< 0.6 else 2 if s< 0.9 else 3
-        
         # Diferentes distribuciones para el eagerness
         if eagerness is not None:
             self.eagerness = eagerness
@@ -54,10 +50,10 @@ class Intersection:
     def add_car(self):
         p = random.uniform(0,1)
         q = random.uniform(0,1)
-        if p < 0.7:
+        if p < 0.5:
             self.ns_cars.append(Car("NS", eagerness_distribution=self.eagerness_distribution))
         
-        if q < 0.5:
+        if q < 0.2:
             self.we_cars.append(Car("WE", eagerness_distribution=self.eagerness_distribution))
 
     def getState(self):

@@ -81,7 +81,7 @@ class TrafficVisualization:
     def update_speed(self, value):
         self.speed = int(value)
         
-    def start_simulation(self):
+    def start_simulation(self, num_episodes: int = 1000, max_steps_per_episode: int = 500):
         if not self.running:
             self.running = True
             self.start_button.config(state=tk.DISABLED)
@@ -95,10 +95,10 @@ class TrafficVisualization:
                 # Entrenar rápidamente
                 self.current_agent = TrafficAgent(epsilon=0.1, gamma=0.9, alpha=0.01)
                 print("Entrenando agente RL...")
-                for ep in range(100):
+                for ep in range(num_episodes):
                     temp_intersection = Intersection(eagerness_distribution=dist)
                     state = temp_intersection.getState()
-                    for _ in range(2000):
+                    for _ in range(max_steps_per_episode):
                         action = self.current_agent.getAction(state)
                         nextState, reward, _ = temp_intersection.step(action)
                         self.current_agent.update(state, action, nextState, reward)
